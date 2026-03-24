@@ -1,0 +1,26 @@
+version: '3.9'
+
+services:
+  web:
+    env_file:
+      - .env  
+    build:
+      context: .
+      dockerfile: AutoSpaceTestTask.Web/Dockerfile
+    ports:
+      - "5000:8080"
+    depends_on:
+      - db
+    environment:
+      - ConnectionStrings__Default=Server=db;Database=StoreDb;User=sa;Password=Your_password123;TrustServerCertificate=True
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    env_file:
+      - .env    
+    container_name: sqlserver
+    environment:
+      SA_PASSWORD: "Your_password123"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"

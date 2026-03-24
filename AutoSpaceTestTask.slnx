@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="AutoSpaceTestTask.Application/AutoSpaceTestTask.Application.csproj" />
+  <Project Path="AutoSpaceTestTask.Database/AutoSpaceTestTask.Database.csproj" />
+  <Project Path="AutoSpaceTestTask.Web/AutoSpaceTestTask.Web.csproj" />
+</Solution>
