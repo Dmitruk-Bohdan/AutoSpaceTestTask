@@ -11,8 +11,7 @@ namespace AutoSpaceTestTask.Web.Extensions
                 .AddApplication()
                 .AddRoutingServicesConfiguration()
                 .AddHttpContextAccessor()
-                .AddCorsPolicy()
-                .AddControllersWithViews();
+                .AddCorsPolicy();
 
             return services;
         }

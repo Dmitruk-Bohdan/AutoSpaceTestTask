@@ -4,7 +4,7 @@
     {
         public static IServiceCollection AddRoutingServicesConfiguration(this IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllersWithViews();
             services.AddHttpContextAccessor();
             services.AddRouting();
 

@@ -1,4 +1,5 @@
-﻿using AutoSpaceTestTask.Web.Common.Constants;
+﻿using AutoSpaceTestTask.Database.Extensions;
+using AutoSpaceTestTask.Web.Common.Constants;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 
 namespace AutoSpaceTestTask.Web.Extensions
@@ -9,9 +10,12 @@ namespace AutoSpaceTestTask.Web.Extensions
         {
             app.UseGlobalExceptionHandling();
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
             app.UseRouting();
             app.UseCors(PoliciesConstants.CorsPolicy);
+            app.ApplyDbMigrations();
             app.MapControllers();
+            app.AddWebApplicationRoutingConfigurations();
         }
     }
 }
