@@ -4,8 +4,9 @@
     {
         public long StoreId { get; set; }
         public DayOfWeek DayOfWeek { get; set; }
-        public TimeSpan UtcStartTime { get; set; }
-        public TimeSpan UtcEndTime { get; set; }
+        public TimeOnly OpenTime { get; set; }
+        public TimeOnly CloseTime { get; set; }
+        public bool IsDayOff { get; set; }
 
         public Store Store { get; set; } = default!;
     }

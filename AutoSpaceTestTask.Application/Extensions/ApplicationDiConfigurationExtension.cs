@@ -1,8 +1,8 @@
 ﻿using AutoSpaceTestTask.Application.Services.Implemetations;
 using AutoSpaceTestTask.Application.Services.Interfaces;
+using AutoSpaceTestTask.Database.Extensions;
 using FluentValidation;
-using Mapster;
-using MapsterMapper;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -11,14 +11,15 @@ namespace AutoSpaceTestTask.Application.Extensions
     public static class ApplicationDiConfigurationExtension
     {
         public static IServiceCollection AddApplication(
-            this IServiceCollection services)
+            this IServiceCollection services,
+            IConfiguration configuration)
         {
             var assembly = typeof(ApplicationDiConfigurationExtension).Assembly;
 
             services
+                .AddDbConfiguration(configuration)
                 .AddValidation(assembly)
-                .AddServices()
-                .AddMapping(assembly);
+                .AddServices();
 
             return services;
         }
@@ -28,19 +29,6 @@ namespace AutoSpaceTestTask.Application.Extensions
             Assembly assembly)
         {
             services.AddValidatorsFromAssembly(assembly);
-            return services;
-        }
-
-        private static IServiceCollection AddMapping(
-        this IServiceCollection services,
-        Assembly assembly)
-        {
-            var config = new TypeAdapterConfig();
-            config.Scan(assembly);
-
-            services.AddSingleton(config);
-            services.AddScoped<IMapper, ServiceMapper>();
-
             return services;
         }
 

@@ -1,0 +1,35 @@
+﻿@using AutoSpaceTestTask.Application.Models.Dtos
+@model ProductListResponseDto
+
+@if (Model?.Items != null && Model.Items.Any())
+{
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Код</th>
+                <th>Артикул</th>
+                <th>Бренд</th>
+                <th>Название</th>
+                <th>Группа</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model.Items)
+            {
+                <tr>
+                    <td>@product.Code</td>
+                    <td>@product.Article</td>
+                    <td>@product.Brand</td>
+                    <td>@product.Name</td>
+                    <td>@product.GroupName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-info">
+        В этом магазине пока нет товаров
+    </div>
+}

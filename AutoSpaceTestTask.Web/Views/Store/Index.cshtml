@@ -1,0 +1,152 @@
+﻿@using AutoSpaceTestTask.Application.Models.Dtos
+@model StoreListResponseDto
+
+@{
+    ViewData["Title"] = "Store Management";
+}
+
+<div class="container mt-4">
+    <h2>Store Management</h2>
+    
+    <div class="mb-3">
+        <button type="button" class="btn btn-info" id="btnOpenStores">
+            Show Open Stores
+        </button>
+    </div>
+    
+    <div class="table-responsive">
+        <table class="table table-hover" id="storesTable">
+            <thead class="table-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Code</th>
+                    <th>Address</th>
+                    <th>Schedule</th>
+                    <th>Products Count</th>
+                    <th>Products Details</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var store in Model.Items)
+                {
+                    <tr>
+                        <td>@store.Name</td>
+                        <td>@store.Code.ToString().Substring(0, 8).ToUpper()</td>
+                        <td>@store.Address</td>
+                        <td>
+                            @if (store.StoreSchedulesDto != null && store.StoreSchedulesDto.Any())
+                            {
+                                <div style="font-size: 0.9em;">
+                                    @{
+                                        var orderedSchedules = store.StoreSchedulesDto.OrderBy(s => s.DayOfWeek);
+                                        foreach (var schedule in orderedSchedules)
+                                        {
+                                            var dayName = schedule.DayOfWeek.ToString().Substring(0, 3);
+                                            if (schedule.IsDayOff)
+                                            {
+                                                <div>@dayName: off</div>
+                                            }
+                                            else
+                                            {
+                                                <div>@dayName: @schedule.OpenTime.ToString("HH:mm") -- @schedule.CloseTime.ToString("HH:mm")</div>
+                                            }
+                                        }
+                                    }
+                                </div>
+                            }
+                            else
+                            {
+                                <span class="text-muted">Not set</span>
+                            }
+                        </td>
+                        <td>
+                            <span class="badge bg-primary">@store.ProductsCount</span>
+                        </td>
+                        <td>
+                            <a href="javascript:void(0)"
+                                   class="btn btn-sm btn-info btn-products"
+                                   data-store-id="@store.StoreId"
+                                   data-store-name="@store.Name">
+                                View Products
+                            </a>
+                        </td>
+                        <td>
+                            <button type="button"
+                                    class="btn btn-sm btn-primary btn-edit"
+                                    data-store-id="@store.StoreId">
+                                Edit
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="productsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Products of: <span id="storeName"></span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="productsModalBody">
+                <div class="text-center">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editStoreModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Store</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="editStoreModalBody">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="openStoresModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Stores Open Now</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="openStoresModalBody">
+                <div class="text-center">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="storeDetailsModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Store Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="storeDetailsModalBody">
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/store/store-management.js"></script>
+}

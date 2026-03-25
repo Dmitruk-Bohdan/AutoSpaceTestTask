@@ -10,6 +10,6 @@
         public long GroupId { get; set; }
         public ProductGroup Group { get; set; } = default!;
 
-        public ICollection<Store> Stores { get; set; } = new List<Store>();
+        public ICollection<StoreProduct> StoreProducts { get; set; } = new List<StoreProduct>();
     }
 }

@@ -9,7 +9,7 @@ public static class DbMigrationExtensions
 {
     public static WebApplication ApplyDbMigrations(this WebApplication app)
     {
-#if !DEBUG
+#if DEBUG
         using (var scope = app.Services.CreateScope())
         {
             var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();

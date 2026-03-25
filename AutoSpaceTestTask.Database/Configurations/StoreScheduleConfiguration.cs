@@ -15,10 +15,13 @@ namespace AutoSpaceTestTask.Database.Configurations
             builder.Property(x => x.DayOfWeek)
                 .IsRequired();
 
-            builder.Property(x => x.UtcStartTime)
+            builder.Property(x => x.OpenTime)
                 .IsRequired();
 
-            builder.Property(x => x.UtcEndTime)
+            builder.Property(x => x.CloseTime)
+                .IsRequired();
+
+            builder.Property(x => x.IsDayOff)
                 .IsRequired();
 
             builder.HasOne(x => x.Store)

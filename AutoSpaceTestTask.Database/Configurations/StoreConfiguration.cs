@@ -26,22 +26,6 @@ public class StoreConfiguration : IEntityTypeConfiguration<Store>
             .HasForeignKey(x => x.StoreId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasMany(x => x.Products)
-            .WithMany(x => x.Stores)
-            .UsingEntity<Dictionary<string, object>>(
-                "StoreProducts",
-                j => j.HasOne<Product>()
-                      .WithMany()
-                      .HasForeignKey("ProductId"),
-                j => j.HasOne<Store>()
-                      .WithMany()
-                      .HasForeignKey("StoreId"),
-                j =>
-                {
-                    j.HasKey("StoreId", "ProductId");
-                    j.ToTable("StoreProducts");
-                });
-
         builder.HasIndex(x => x.Code)
             .IsUnique();
     }

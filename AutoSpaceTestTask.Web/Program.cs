@@ -3,7 +3,9 @@ using AutoSpaceTestTask.Web.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 var services = builder.Services;
-    services.AddWeb();
+var configuration = builder.Configuration;
+
+services.AddWeb(configuration);
 
 var app = builder.Build();
 app.ConfigureMiddleware();

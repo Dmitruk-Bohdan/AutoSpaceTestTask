@@ -1,10 +1,19 @@
-﻿namespace AutoSpaceTestTask.Web.Extensions
+﻿using AutoSpaceTestTask.Database.Common.Converters;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
+namespace AutoSpaceTestTask.Web.Extensions
 {
     public static class RoutingConfigurationExtension
     {
         public static IServiceCollection AddRoutingServicesConfiguration(this IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.Converters.Add(new TimeOnlyJsonConverter());
+                    options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                });
             services.AddHttpContextAccessor();
             services.AddRouting();
 
@@ -15,7 +24,7 @@
         {
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Store}/{action=Index}");
 
         }
     }

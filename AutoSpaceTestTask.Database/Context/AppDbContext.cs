@@ -10,6 +10,7 @@ namespace AutoSpaceTestTask.Database.Context
         {
         }
         public DbSet<Product> Products { get; set; }
+        public DbSet<StoreProduct> StoreProducts { get; set; }
         public DbSet<ProductGroup> ProductGroups { get; set; }
         public DbSet<Store> Stores { get; set; }
         public DbSet<StoreSchedule> StoreSchedules { get; set; }
