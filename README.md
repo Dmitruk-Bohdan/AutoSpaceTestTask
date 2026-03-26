@@ -18,9 +18,9 @@ SA_PASSWORD: _your_password_
 ConnectionStrings__DefaultConnection=Server=db;Database=AsStorageDb;User Id=sa;Password=_your_password_;TrustServerCertificate=True;
 
 
-В корневой папке проекта выполните команду docker compose up
+В корневой папке проекта в консоли выполните команду docker compose up
 
-Дождитесь появления в консолии сообщения 
+Дождитесь появления в консоли сообщения 
 
 web-1      | info: Microsoft.Hosting.Lifetime[14]
 
