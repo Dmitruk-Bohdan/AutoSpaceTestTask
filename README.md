@@ -10,6 +10,7 @@
 ## Переменные окружения
 
 Замените при желании в файле `.env` в корне проекта значения пароля для учетной записи администратора в развертываемой базе на более надежное.
+
 Пароль замените следующим образом 
 
 SA_PASSWORD: _your_password_
@@ -18,6 +19,7 @@ ConnectionStrings__DefaultConnection=Server=db;Database=AsStorageDb;User Id=sa;P
 
 
 В корневой папке проекта выполните команду docker compose up
+
 Дождитесь появления в консолии сообщения 
 
 web-1      | info: Microsoft.Hosting.Lifetime[14]
@@ -27,5 +29,6 @@ web-1      |       Application started. Press Ctrl+C to shut down.
 web-1      | info: Microsoft.Hosting.Lifetime[0]
 web-1      |       Hosting environment: Production
 
-Для открытия веб приложения перейдите по ссылке http://localhost:5000/
+
+После чего для открытия веб приложения перейдите по ссылке http://localhost:5000/
 
