@@ -17,3 +17,51 @@ table.table tbody tr:hover td {
     transition: background-color 0.2s;
 }
 
+.stores-table {
+    table-layout: fixed;
+}
+
+.stores-table th {
+    vertical-align: middle; 
+    text-align: center; 
+}
+
+    .stores-table th:nth-child(1), /* Name */
+    .stores-table td:nth-child(1) {
+        width: 16%;
+    }
+
+    .stores-table th:nth-child(2), /* Code */
+    .stores-table td:nth-child(2) {
+        width: 10%;
+    }
+
+    .stores-table th:nth-child(3), /* Address */
+    .stores-table td:nth-child(3) {
+        width: 30%;
+    }
+
+    .stores-table th:nth-child(4), /* Schedule */
+    .stores-table td:nth-child(4) {
+        width: 16%;
+    }
+
+    .stores-table th:nth-child(5), /* Products Count */
+    .stores-table td:nth-child(5) {
+        width: 8%;
+    }
+
+    .stores-table th:nth-child(6), /* Products Details */
+    .stores-table td:nth-child(6) {
+        width: 10%;
+    }
+
+    .stores-table th:nth-child(7), /* Actions */
+    .stores-table td:nth-child(7) {
+        width: 12%;
+    }
+
+.store-address {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
