@@ -13,6 +13,7 @@
 Пароль замените следующим образом 
 
 SA_PASSWORD: _your_password_
+
 ConnectionStrings__DefaultConnection=Server=db;Database=AsStorageDb;User Id=sa;Password=_your_password_;TrustServerCertificate=True;
 
 
