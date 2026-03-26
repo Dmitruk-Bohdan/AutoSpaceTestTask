@@ -1,4 +1,4 @@
-﻿namespace AutoSpaceTestTask.Application.Models.Dtos
+﻿namespace AutoSpaceTestTask.Application.Models.Dtos.ProductDtos
 {
     public class ProductDetailsResponseDto
     {

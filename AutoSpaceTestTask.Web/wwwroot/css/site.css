@@ -1,5 +1,5 @@
 html, body {
-    height: 100%;
+    height: 10%;
 }
 
 body {
@@ -11,24 +11,9 @@ body {
     flex: 1;
 }
 
-.edit-schedule-row {
-    display: flex;
-    align-items: center;
-    margin-bottom: 0.5rem;
-    gap: 0.5rem; 
+table.table tbody tr:hover td {
+    background-color: #d0e7f2;
+    border-color: #c1d6e0;
+    transition: background-color 0.2s;
 }
 
-    .edit-schedule-row .day {
-        width: 100px; 
-        flex-shrink: 0;
-    }
-
-    .edit-schedule-row .time-input {
-        width: 90px; 
-        flex-shrink: 0;
-    }
-
-    .edit-schedule-row .is-working {
-        width: 40px; 
-        flex-shrink: 0;
-    }

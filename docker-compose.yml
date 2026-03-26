@@ -3,9 +3,9 @@ version: '3.9'
 services:
   db:
     image: mcr.microsoft.com/mssql/server:2022-latest
-    user: root 
+    user: root
     env_file:
-      - .env    
+      - .env
     container_name: sqlserver
     ports:
       - "1433:1433"
@@ -13,16 +13,16 @@ services:
       - astest_data:/var/opt/mssql/data
     restart: unless-stopped
 
-#  web:
-#    env_file:
-#      - .env  
-#    build:
-#      context: .
-#      dockerfile: AutoSpaceTestTask.Web/Dockerfile
-#    ports:
-#      - "5000:8080"
-#    depends_on:
-#      - db
+  web:
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: AutoSpaceTestTask.Web/Dockerfile
+    ports:
+      - "5000:8080"
+    depends_on:
+      - db
 
 volumes:
   astest_data:

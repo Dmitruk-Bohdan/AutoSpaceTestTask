@@ -10,13 +10,33 @@ namespace AutoSpaceTestTask.Web.Extensions
             using var scope = app.Services.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            ClearAllTables(context);
 
             Seed(context);
 
             return app;
         }
+
+        private static void ClearAllTables(AppDbContext context)
+        {
+            var storeProducts = context.StoreProducts.ToList();
+            context.StoreProducts.RemoveRange(storeProducts);
+
+            var storeSchedules = context.StoreSchedules.ToList();
+            context.StoreSchedules.RemoveRange(storeSchedules);
+
+            var products = context.Products.ToList();
+            context.Products.RemoveRange(products);
+
+            var stores = context.Stores.ToList();
+            context.Stores.RemoveRange(stores);
+
+            var productGroups = context.ProductGroups.ToList();
+            context.ProductGroups.RemoveRange(productGroups);
+
+            context.SaveChanges();
+        }
+
 
         private static void Seed(AppDbContext context)
         {

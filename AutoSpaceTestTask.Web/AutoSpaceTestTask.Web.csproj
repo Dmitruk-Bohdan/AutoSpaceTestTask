@@ -16,7 +16,16 @@
     <ProjectReference Include="..\AutoSpaceTestTask.Application\AutoSpaceTestTask.Application.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
+	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
+		<Content Update="appsettings.Development.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="appsettings.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>		
+	</ItemGroup>
+
+<ItemGroup>
     <Content Update="wwwroot\css\site.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -1,8 +1,9 @@
 ﻿@using AutoSpaceTestTask.Application.Models.Dtos
-@model OpenStoreListResponseDto
+@using AutoSpaceTestTask.Application.Models.Dtos.StoreDtos
+@model ListResponseDto<StorePreviewResponseDto>
 
 <div class="table-responsive">
-    <table class="table table-bordered">
+    <table class="table table-bordered table-hover">
         <thead class="table-dark">
             <tr>
                 <th>Name</th>

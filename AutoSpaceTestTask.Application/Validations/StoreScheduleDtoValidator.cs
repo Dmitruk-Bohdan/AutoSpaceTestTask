@@ -1,4 +1,4 @@
-﻿using AutoSpaceTestTask.Application.Models.Dtos;
+﻿using AutoSpaceTestTask.Application.Models.Dtos.StoreDtos;
 using FluentValidation;
 
 namespace AutoSpaceTestTask.Application.Validations

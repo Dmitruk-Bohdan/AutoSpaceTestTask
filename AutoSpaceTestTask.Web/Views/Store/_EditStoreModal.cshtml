@@ -29,9 +29,19 @@
                         {
                             <div class="edit-schedule-row">
                                 <span class="day">@Model.ScheduleItems[i].DayOfWeek</span>
-                                <input type="time" class="form-control time-input" name="ScheduleItems[@i].Start" value="@Model.ScheduleItems[i].Start.ToString("HH:mm")" />
-                                <input type="time" class="form-control time-input" name="ScheduleItems[@i].End" value="@Model.ScheduleItems[i].End.ToString("HH:mm")" />
-                                <input type="checkbox" class="form-check-input is-working" name="ScheduleItems[@i].IsWorkingDay" @(Model.ScheduleItems[i].IsWorkingDay ? "checked" : "") />
+
+                                <input type="hidden" name="ScheduleItems[@i].DayOfWeek"
+                                       value="@( ((int)Model.ScheduleItems[i].DayOfWeek) )" />
+
+                                <input type="time" class="form-control time-input" name="ScheduleItems[@i].Start"
+                                       value="@Model.ScheduleItems[i].Start.ToString("HH:mm")" />
+
+                                <input type="time" class="form-control time-input" name="ScheduleItems[@i].End"
+                                       value="@Model.ScheduleItems[i].End.ToString("HH:mm")" />
+
+                                <input type="checkbox" class="form-check-input is-working"
+                                       name="ScheduleItems[@i].IsWorkingDay"
+                                @(Model.ScheduleItems[i].IsWorkingDay ? "checked" : "") />
                             </div>
                         }
                     </div>

@@ -1,4 +1,4 @@
-﻿using AutoSpaceTestTask.Application.Models.Dtos;
+﻿using AutoSpaceTestTask.Application.Models.Dtos.StoreDtos;
 using AutoSpaceTestTask.Application.Services.Interfaces;
 using AutoSpaceTestTask.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;

@@ -2,8 +2,6 @@
     initEditButton();
     initSaveStoreButton();
 });
-
-// ================= OPEN MODAL =================
 function initEditButton() {
     $(document).on('click', '.btn-edit', function () {
         const storeId = $(this).data('store-id');
@@ -18,7 +16,6 @@ function initEditButton() {
     });
 }
 
-// ================= SAVE =================
 function initSaveStoreButton() {
     $(document).on('click', '#saveStoreBtn', function () {
 
@@ -63,7 +60,6 @@ function initSaveStoreButton() {
 
         dto.storeSchedulesDto = Object.values(scheduleMap);
 
-        // ✅ PRODUCTS (FIXED)
         form.find('input[name="SelectedProductIds"]:checked').each(function () {
             dto.storeProductIds.push(parseInt($(this).val()));
         });
@@ -85,7 +81,6 @@ function initSaveStoreButton() {
                     return;
                 }
 
-                // close modal
                 const modalEl = document.getElementById('editStoreModal');
                 const modal = bootstrap.Modal.getInstance(modalEl);
                 if (modal) {
@@ -103,7 +98,6 @@ function initSaveStoreButton() {
     });
 }
 
-// ================= UPDATE TABLE =================
 function updateStoreRow(store) {
 
     const row = $(`tr[data-store-id="${store.storeId}"]`);
@@ -135,7 +129,6 @@ function updateStoreRow(store) {
     }
 }
 
-// ================= HELPERS =================
 function getDayShort(day) {
     const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     return days[day] || '';

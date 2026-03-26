@@ -1,4 +1,5 @@
 ﻿@using AutoSpaceTestTask.Application.Models.Dtos
+@using AutoSpaceTestTask.Application.Models.Dtos.StoreDtos
 @model IEnumerable<StoreDetailsResponseDto>
 
 <div class="table-responsive">
@@ -19,7 +20,7 @@
             {
                 <tr data-store-id="@store.StoreId">
                     <td class="store-name">@store.Name</td>
-                    <td class="store-code">@store.Code.ToString().Substring(0, 8).ToUpper()</td>
+                    <td class="store-code">@store.Code.ToString().ToUpper()</td>
                     <td class="store-address">@store.Address</td>
                     <td class="store-schedule">
                         @if (store.StoreSchedulesDto?.Any() == true)

@@ -1,5 +1,6 @@
 ﻿@using AutoSpaceTestTask.Application.Models.Dtos
-@model StoreListResponseDto
+@using AutoSpaceTestTask.Application.Models.Dtos.StoreDtos
+@model ListResponseDto<StoreDetailsResponseDto>
 
 @{
     ViewData["Title"] = "Store Management";
@@ -66,7 +67,6 @@
 <div id="editStoreModalContainer"></div>
 
 @section Styles {
-    <link rel="stylesheet" href="@Url.Content("~/css/store/store-management.css")" />
     <link rel="stylesheet" href="@Url.Content("~/css/store/store-edit.css")" />
 }
 

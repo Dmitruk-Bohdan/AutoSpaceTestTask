@@ -1,5 +1,7 @@
 ﻿using AutoSpaceTestTask.Application.Models;
 using AutoSpaceTestTask.Application.Models.Dtos;
+using AutoSpaceTestTask.Application.Models.Dtos.ProductDtos;
+using AutoSpaceTestTask.Application.Models.Dtos.StoreDtos;
 using AutoSpaceTestTask.Application.Services.Interfaces;
 using AutoSpaceTestTask.Database.Context;
 using AutoSpaceTestTask.Database.Entities;
@@ -20,7 +22,7 @@ namespace AutoSpaceTestTask.Application.Services.Implemetations
             _logger = logger;
         }
 
-        public async Task<StoreListResponseDto> GetStoreListAsync()
+        public async Task<ListResponseDto<StoreDetailsResponseDto>> GetStoreListAsync()
         {
             var stores = await _context.Stores
                 .AsNoTracking()
@@ -42,7 +44,7 @@ namespace AutoSpaceTestTask.Application.Services.Implemetations
                     }).ToList()
                 })
                 .ToListAsync();
-            var reponse = new StoreListResponseDto()
+            var reponse = new ListResponseDto<StoreDetailsResponseDto>()
             {
                 Items = stores
             };
@@ -91,7 +93,7 @@ namespace AutoSpaceTestTask.Application.Services.Implemetations
             return response;
         }
 
-        public async Task<OpenStoreListResponseDto> GetOpenStoreListAsync()
+        public async Task<ListResponseDto<StorePreviewResponseDto>> GetOpenStoreListAsync()
         {
             var currentDayOfWeek = DateTime.Now.DayOfWeek;
             var currentTime = TimeOnly.FromDateTime(DateTime.Now);
@@ -125,7 +127,7 @@ namespace AutoSpaceTestTask.Application.Services.Implemetations
                 })
                 .ToListAsync();
 
-            var response = new OpenStoreListResponseDto()
+            var response = new ListResponseDto<StorePreviewResponseDto>()
             {
                 Items = openStores
             };
@@ -133,7 +135,7 @@ namespace AutoSpaceTestTask.Application.Services.Implemetations
             return response;
         }
 
-        public async Task<ProductListResponseDto> GetStoreProductListAsync(long storeId)
+        public async Task<ListResponseDto<ProductDetailsResponseDto>> GetStoreProductListAsync(long storeId)
         {
             var storeProducts = await _context.StoreProducts
                 .AsNoTracking()
@@ -149,7 +151,7 @@ namespace AutoSpaceTestTask.Application.Services.Implemetations
                 })
                 .ToListAsync();
 
-            var response = new ProductListResponseDto()
+            var response = new ListResponseDto<ProductDetailsResponseDto>()
             {
                 Items = storeProducts
             };
@@ -217,7 +219,7 @@ namespace AutoSpaceTestTask.Application.Services.Implemetations
             return new OperationResult();
         }
 
-        public async Task<ProductPreviewListResponseDto> GetProductPreviewListAsync()
+        public async Task<ListResponseDto<ProductPreviewResponseDto>> GetProductPreviewListAsync()
         {
             var products = await _context.Products.Select(p => new ProductPreviewResponseDto()
             {
@@ -226,7 +228,7 @@ namespace AutoSpaceTestTask.Application.Services.Implemetations
                 Name = p.Name,
             }).ToListAsync();
 
-            var response = new ProductPreviewListResponseDto()
+            var response = new ListResponseDto<ProductPreviewResponseDto>()
             {
                 Items = products
             };
