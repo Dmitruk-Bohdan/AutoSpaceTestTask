@@ -23,11 +23,17 @@ ConnectionStrings__DefaultConnection=Server=db;Database=AsStorageDb;User Id=sa;P
 Дождитесь появления в консолии сообщения 
 
 web-1      | info: Microsoft.Hosting.Lifetime[14]
+
 web-1      |       Now listening on: http://[::]:8080
+
 web-1      | info: Microsoft.Hosting.Lifetime[0]
+
 web-1      |       Application started. Press Ctrl+C to shut down.
+
 web-1      | info: Microsoft.Hosting.Lifetime[0]
+
 web-1      |       Hosting environment: Production
+
 
 
 После чего для открытия веб приложения перейдите по ссылке http://localhost:5000/
