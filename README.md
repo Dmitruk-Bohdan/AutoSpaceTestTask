@@ -12,8 +12,8 @@
 Замените при желании в файле `.env` в корне проекта значения пароля для учетной записи администратора в развертываемой базе на более надежное.
 Пароль замените следующим образом 
 
-SA_PASSWORD: <your password>
-ConnectionStrings__DefaultConnection=Server=db;Database=AsStorageDb;User Id=sa;Password=<your password>;TrustServerCertificate=True;
+SA_PASSWORD: _your_password_
+ConnectionStrings__DefaultConnection=Server=db;Database=AsStorageDb;User Id=sa;Password=_your_password_;TrustServerCertificate=True;
 
 
 В корневой папке проекта выполните команду docker compose up
