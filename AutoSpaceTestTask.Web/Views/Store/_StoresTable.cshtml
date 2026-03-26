@@ -1,0 +1,71 @@
+﻿@using AutoSpaceTestTask.Application.Models.Dtos
+@model IEnumerable<StoreDetailsResponseDto>
+
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Name</th>
+                <th>Code</th>
+                <th>Address</th>    
+                <th>Schedule</th>
+                <th>Products Count</th>
+                <th>Products Details</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var store in Model)
+            {
+                <tr data-store-id="@store.StoreId">
+                    <td class="store-name">@store.Name</td>
+                    <td class="store-code">@store.Code.ToString().Substring(0, 8).ToUpper()</td>
+                    <td class="store-address">@store.Address</td>
+                    <td class="store-schedule">
+                        @if (store.StoreSchedulesDto?.Any() == true)
+                        {
+                            var orderedSchedules = store.StoreSchedulesDto
+                                .OrderBy(s => ((int)s.DayOfWeek + 6) % 7);
+
+                            <div style="font-size: 0.9em;">
+                                @foreach (var s in orderedSchedules)
+                                {
+                                    var day = s.DayOfWeek.ToString().Substring(0, 3);
+
+                                    if (s.IsDayOff)
+                                    {
+                                        <div>@day: off</div>
+                                    }
+                                    else
+                                    {
+                                        <div>@day: @s.OpenTime.ToString("HH:mm") - @s.CloseTime.ToString("HH:mm")</div>
+                                    }
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <span class="text-muted">Not set</span>
+                        }
+                    </td>
+                    <td class="store-products-count">@store.ProductsCount</td>
+                    <td>
+                        <a href="javascript:void(0)"
+                               class="btn btn-sm btn-info btn-products"
+                               data-store-id="@store.StoreId"
+                               data-store-name="@store.Name">
+                            View Products
+                        </a>
+                    </td>
+                    <td>
+                        <button type="button"
+                                class="btn btn-sm btn-primary btn-edit"
+                                data-store-id="@store.StoreId">
+                            Edit
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

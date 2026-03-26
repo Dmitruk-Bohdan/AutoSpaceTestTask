@@ -3,14 +3,14 @@
 
 @if (Model?.Items != null && Model.Items.Any())
 {
-    <table class="table table-striped table-hover">
+    <table class="table table-bordered">
         <thead class="table-dark">
             <tr>
-                <th>Код</th>
-                <th>Артикул</th>
-                <th>Бренд</th>
-                <th>Название</th>
-                <th>Группа</th>
+                <th>Code</th>
+                <th>Article</th>
+                <th>Brand</th>
+                <th>Name</th>
+                <th>Group Name</th>
             </tr>
         </thead>
         <tbody>
@@ -30,6 +30,6 @@
 else
 {
     <div class="alert alert-info">
-        В этом магазине пока нет товаров
+        We apologize, no items are currently available in this store
     </div>
 }

@@ -14,6 +14,7 @@ namespace AutoSpaceTestTask.Web.Extensions
             app.UseRouting();
             app.UseCors(PoliciesConstants.CorsPolicy);
             app.ApplyDbMigrations();
+            app.SeedDb();
             app.MapControllers();
             app.AddWebApplicationRoutingConfigurations();
         }

@@ -1,6 +1,8 @@
 ﻿using AutoSpaceTestTask.Application.Models.Dtos;
 using AutoSpaceTestTask.Application.Services.Interfaces;
+using AutoSpaceTestTask.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AutoSpaceTestTask.Web.Controllers
 {
@@ -36,11 +38,15 @@ namespace AutoSpaceTestTask.Web.Controllers
         [Route("{storeId:long}/details")]
         public async Task<IActionResult> GetStoreDetails([FromRoute] long storeId)
         {
-            var storeDetails = await _storeService.GetStoreDetailsAsync(storeId);
+            var storeResult = await _storeService.GetStoreDetailsAsync(storeId);
 
-            var products = await _storeService.GetStoreProductListAsync(storeId);
+            if (storeResult.Payload == null)
+            {
+                return NotFound();
+            }
 
-            return Json(new { store = storeDetails});
+            var singleStoreList = new List<StoreDetailsResponseDto> { storeResult.Payload };
+            return PartialView("_StoresTable", singleStoreList);
         }
 
         [HttpGet]
@@ -48,27 +54,92 @@ namespace AutoSpaceTestTask.Web.Controllers
         public async Task<IActionResult> Products([FromRoute] long storeId)
         {
             var productList = await _storeService.GetStoreProductListAsync(storeId);
-            return PartialView("_ProductList", productList);
+            return PartialView("_ProductsTable", productList);
         }
 
-        [HttpPost]
-        [Route("")]
-        public async Task<IActionResult> UpdateStore([FromBody] UpdateStoreDto updateDto)
+        [HttpGet]
+        [Route("{storeId:long}/edit")]
+        public async Task<IActionResult> GetStoreEditInfo(long storeId)
+        {
+            var storeResult = await _storeService.GetStoreDetailsForUpdateAsync(storeId);
+            if (!storeResult.IsSucceess)
+                return NotFound();
+
+            var scheduleItems = storeResult.Payload!.StoreSchedulesDto
+                .Select(s => new ScheduleItemViewModel
+                {
+                    DayOfWeek = s.DayOfWeek,
+                    Start = s.OpenTime,
+                    End = s.CloseTime,
+                    IsWorkingDay = !s.IsDayOff
+                }).ToList();
+
+            var allProducts = await _storeService.GetProductPreviewListAsync();
+            var availableProducts = allProducts.Items
+                .Select(p => new SelectListItem { Value = p.ProductId.ToString(), Text = $"{p.Article} -- {p.Name}"})
+                .ToList();
+
+            var selectedProductIds = storeResult.Payload.StoreProductIds ?? new List<long>();
+
+            var vm = new UpdateStoreViewModel
+            {
+                StoreId = storeResult.Payload.StoreId,
+                Name = storeResult.Payload.Name,
+                Address = storeResult.Payload.Address,
+                ScheduleItems = scheduleItems,
+                AvailableProducts = availableProducts,
+                SelectedProductIds = selectedProductIds
+            };
+
+            return PartialView("_EditStoreModal", vm);
+        }
+
+        [HttpPost("update")]
+        public async Task<IActionResult> UpdateStore([FromBody] UpdateStoreDto dto)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return BadRequest(new
+                {
+                    success = false,
+                    errors = ModelState.Values
+                        .SelectMany(v => v.Errors)
+                        .Select(e => e.ErrorMessage)
+                });
             }
 
             try
             {
-                await _storeService.UpdateStoreAsync(updateDto);
-                var updatedStore = await _storeService.GetStoreDetailsAsync(updateDto.StoreId);
-                return Json(new { success = true, store = updatedStore });
+                await _storeService.UpdateStoreAsync(dto);
+
+                var updatedStoreResult = await _storeService.GetStoreDetailsAsync(dto.StoreId);
+                
+                if (!updatedStoreResult.IsSucceess)
+                {
+                    return NotFound();
+                }
+
+                return Ok(new
+                {
+                    success = true,
+                    store = updatedStoreResult.Payload
+                });
             }
-            catch (Exception ex)
+            catch (ArgumentException ex)
             {
-                return Json(new { success = false, message = ex.Message });
+                return BadRequest(new
+                {
+                    success = false,
+                    message = ex.Message
+                });
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Internal server error"
+                });
             }
         }
     }

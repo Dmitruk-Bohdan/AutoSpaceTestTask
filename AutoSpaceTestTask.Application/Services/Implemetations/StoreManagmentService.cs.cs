@@ -115,6 +115,13 @@ namespace AutoSpaceTestTask.Application.Services.Implemetations
                     StoreId = s.Store.Id,
                     Name = s.Store.Name,
                     Address = s.Store.Address,
+                    TodaySchedule = new StoreScheduleDto
+                    {
+                        OpenTime = s.OpenTime,
+                        CloseTime = s.CloseTime,
+                        DayOfWeek = s.DayOfWeek,
+                        IsDayOff = s.IsDayOff
+                    }
                 })
                 .ToListAsync();
 
@@ -208,6 +215,56 @@ namespace AutoSpaceTestTask.Application.Services.Implemetations
             await _context.SaveChangesAsync();
 
             return new OperationResult();
+        }
+
+        public async Task<ProductPreviewListResponseDto> GetProductPreviewListAsync()
+        {
+            var products = await _context.Products.Select(p => new ProductPreviewResponseDto()
+            {
+                ProductId = p.Id,
+                Article = p.Article,
+                Name = p.Name,
+            }).ToListAsync();
+
+            var response = new ProductPreviewListResponseDto()
+            {
+                Items = products
+            };
+            return response;
+        }
+
+        public async Task<OperationResult<StoreDetailsForUpdateResponseDto>> GetStoreDetailsForUpdateAsync(long storeId)
+        {
+            var storeDetailsResponse = await GetStoreDetailsAsync(storeId);
+            if(storeDetailsResponse.IsSucceess)
+            {
+                var storeProductIds = await _context.StoreProducts
+                    .Where(sp => sp.StoreId == storeId)
+                    .Select(sp => sp.ProductId)
+                    .ToListAsync();
+
+                var updateDto = new StoreDetailsForUpdateResponseDto
+                {
+                    StoreId = storeDetailsResponse.Payload!.StoreId,
+                    Code = storeDetailsResponse.Payload.Code,
+                    Name = storeDetailsResponse.Payload.Name,
+                    Address = storeDetailsResponse.Payload.Address,
+                    ProductsCount = storeDetailsResponse.Payload.ProductsCount,
+                    StoreSchedulesDto = storeDetailsResponse.Payload.StoreSchedulesDto,
+                    StoreProductIds = storeProductIds
+                };
+                return new OperationResult<StoreDetailsForUpdateResponseDto>()
+                {
+                    Payload = updateDto
+                };
+            }
+            else
+            {
+                return new OperationResult<StoreDetailsForUpdateResponseDto>()
+                {
+                    ErrorMessage = storeDetailsResponse.ErrorMessage
+                };
+            }
         }
     }
 }

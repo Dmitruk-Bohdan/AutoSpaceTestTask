@@ -15,9 +15,6 @@ namespace AutoSpaceTestTask.Web.ViewModels
         [StringLength(300, ErrorMessage = "Address should be max 300 characters")]
         public string Address { get; set; } = default!;
 
-        [Required(ErrorMessage = "Timezone required")]
-        public string TimeZone { get; set; } = default!;
-
         public List<ScheduleItemViewModel> ScheduleItems { get; set; } = default!;
         public List<SelectListItem> AvailableProducts { get; set; } = new();
         public List<long> SelectedProductIds { get; set; } = new(); 

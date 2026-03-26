@@ -5,11 +5,11 @@ using AutoSpaceTestTask.Database.Context;
 
 namespace AutoSpaceTestTask.Database.Extensions;
 
-public static class DbMigrationExtensions
+public static class DbMigrationExtension
 {
     public static WebApplication ApplyDbMigrations(this WebApplication app)
     {
-#if DEBUG
+#if !DEBUG
         using (var scope = app.Services.CreateScope())
         {
             var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();

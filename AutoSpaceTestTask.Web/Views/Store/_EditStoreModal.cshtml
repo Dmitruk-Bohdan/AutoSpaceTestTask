@@ -1,0 +1,68 @@
+﻿@model AutoSpaceTestTask.Web.ViewModels.UpdateStoreViewModel
+
+<div class="modal fade" id="editStoreModal" tabindex="-1">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content p-3">
+            
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Store - @Model.Name</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <form id="editStoreForm">
+                    <input type="hidden" name="StoreId" value="@Model.StoreId" />
+
+                    <div class="mb-3">
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-control" name="Name" value="@Model.Name" required maxlength="200" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Address</label>
+                        <input type="text" class="form-control" name="Address" value="@Model.Address" required maxlength="300" />
+                    </div>
+
+                    <div class="mb-3">
+                        <h6>Schedule</h6>
+                        @for (int i = 0; i < Model.ScheduleItems.Count; i++)
+                        {
+                            <div class="edit-schedule-row">
+                                <span class="day">@Model.ScheduleItems[i].DayOfWeek</span>
+                                <input type="time" class="form-control time-input" name="ScheduleItems[@i].Start" value="@Model.ScheduleItems[i].Start.ToString("HH:mm")" />
+                                <input type="time" class="form-control time-input" name="ScheduleItems[@i].End" value="@Model.ScheduleItems[i].End.ToString("HH:mm")" />
+                                <input type="checkbox" class="form-check-input is-working" name="ScheduleItems[@i].IsWorkingDay" @(Model.ScheduleItems[i].IsWorkingDay ? "checked" : "") />
+                            </div>
+                        }
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Products</label>
+                        <div class="products-grid">
+                            @foreach (var p in Model.AvailableProducts)
+                            {
+                                bool isSelected = Model.SelectedProductIds.Contains(long.Parse(p.Value));
+                                <div class="product-item">
+                                    <input class="form-check-input" type="checkbox"
+                                           name="SelectedProductIds"
+                                           value="@p.Value"
+                                           id="product_@p.Value"
+                                    @(isSelected ? "checked" : "") />
+                                    <label class="form-check-label" for="product_@p.Value">
+                                        @p.Text
+                                    </label>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="saveStoreBtn">Save</button>
+            </div>
+
+        </div>
+    </div>
+</div>
